@@ -9,23 +9,15 @@
                         <tr>
                             <th class="px-4 py-2 text-left">ID</th>
                             <th class="px-4 py-2 text-left">Nama Guru</th>
-                            <th class="px-4 py-2 text-left">Mapel</th>
+                            <th class="px-4 py-2 text-left">Description</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($subjects as $subject)
                             <tr class="border-b">
-                                <td class="px-4 py-2 whitespace-nowrap">{{ $subject->id }}</td>
-                                <td class="px-4 py-2 whitespace-nowrap">
-                                    @foreach ($subject->teachers as $teacher)
-                                        {{ $subject->nama }} <br>
-                                    @endforeach
-                                </td>
-                                <td class="px-4 py-2 whitespace-nowrap">
-                                    @foreach ($subject->teachers as $teacher)
-                                        {{ $subject->name }} <br>
-                                    @endforeach
-                                </td>
+                                <td class="px-4 py-2 whitespace-nowrap">{{ $loop->iteration }}</td>
+                                <td class="px-4 py-2 whitespace-nowrap">{{ $subject->name }}</td>
+                                <td class="px-4 py-2 whitespace-nowrap">{{ $subject->description }}</td>
                         @endforeach
                     </tbody>
                 </table>

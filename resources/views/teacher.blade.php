@@ -20,7 +20,7 @@
                     <tr class="hover:bg-gray-50">
                         <td class="border px-4 py-2">{{ $teacher['id'] }}</td>
                         <td class="border px-4 py-2">{{ $teacher['name'] }}</td>
-                        <td class="border px-4 py-2">{{ $teacher['subject_id'] }}</td>
+                        <td class="border px-4 py-2">{{ $teacher->subject->name }}</td>
                         <td class="border px-4 py-2">{{ $teacher['phone'] }}</td>
                         <td class="border px-4 py-2">{{ $teacher['email'] }}</td>
                         <td class="border px-4 py-2">{{ $teacher['address'] }}</td>
