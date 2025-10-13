@@ -21,7 +21,7 @@
                                         {{ $student->name }} <br>
                                     @endforeach
                                 </td>
-                                <td class="px-4 py-2 whitespace-nowrap">{{ $classroom->name }}</td>
+                                <td class="px-4 py-2 whitespace-nowrap">{{ $classroom->grade }}</td>
                             </tr>
                         @endforeach
                     </tbody>

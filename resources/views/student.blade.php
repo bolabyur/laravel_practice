@@ -11,6 +11,7 @@
                     <th class="border px-4 py-2">Nama</th>
                     <th class="border px-4 py-2">Kelas</th>
                     <th class="border px-4 py-2">Email</th>
+                    <th class="border px-4 py-2">Address</th>
                 </tr>
             </thead>
             <tbody>
@@ -18,8 +19,9 @@
                     <tr class="hover:bg-gray-50">
                         <td class="border px-4 py-2">{{ $student['id'] }}</td>
                         <td class="border px-4 py-2">{{ $student['name'] }}</td>
-                        <td class="border px-4 py-2">{{ $student['grade'] }}</td>
+                        <td class="border px-4 py-2">{{ $student->classroom->grade }}</td>
                         <td class="border px-4 py-2">{{ $student['email'] }}</td>
+                        <td class="border px-4 py-2">{{ $student['address'] }}</td>
                     </tr>
                 @endforeach
             </tbody>

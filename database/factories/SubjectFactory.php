@@ -19,7 +19,7 @@ class SubjectFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->randomElement(['Matematika', 'Bahasa Indonesia', 'Bahasa Inggris', 'Web Development', 'PKK','PJOK', 'Matematika2', 'Bahasa Indonesia2', 'Bahasa Inggris2', 'Web Development2', 'PKK2','PJOK2']),
+            'name' => fake()->randomElement(['Matematika', 'Bahasa Indonesia', 'Bahasa Inggris', 'Web Development', 'PKK','PJOK', 'MTK', 'Bahasa Jepang', 'PPKN', 'IOT', 'Informatik','Mobile Dev']),
             'description' => fake()->realTextBetween()
         ];
     }
