@@ -1,33 +1,40 @@
 <x-layout>
     <x-slot name="title">{{ $title }}</x-slot>
-
-    <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-6 mt-10">
-        <h1 class="text-2xl font-bold mb-6">Daftar Guru</h1>
-        <div class="overflow-x-auto">
-            <table class="table-auto w-full border-collapse border border-gray-300 min-w-full">
-                <thead class="bg-gray-100">
-                    <tr>
-                        <th class="border px-4 py-2">ID</th>
-                        <th class="border px-4 py-2">Nama</th>
-                        <th class="border px-4 py-2">Subject</th>
-                        <th class="border px-4 py-2">Phone</th>
-                        <th class="border px-4 py-2">Email</th>
-                        <th class="border px-4 py-2">Address</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($teachers as $teacher)
-                        <tr class="hover:bg-gray-50">
-                            <td class="border px-4 py-2">{{ $teacher['id'] }}</td>
-                            <td class="border px-4 py-2">{{ $teacher['name'] }}</td>
-                            <td class="border px-4 py-2">{{ $teacher->subject->name  }}</td>
-                            <td class="border px-4 py-2">{{ $teacher['phone'] }}</td>
-                            <td class="border px-4 py-2">{{ $teacher['email'] }}</td>
-                            <td class="border px-4 py-2">{{ $teacher['address'] }}</td>
+    <div class="flex justify-center mt-3">
+        <div class="w-full max-w-7xl bg-white p-6 rounded-2xl shadow-lg">
+            <h2 class="text-2xl font-bold mb-6 text-center">Daftar Data Guru</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full border border-gray-200 table-auto">
+                    <thead class="bg-gray-800 text-white">
+                        <tr>
+                            <th class="px-4 py-2 text-left">No</th>
+                            <th class="px-4 py-2 text-left">Name</th>
+                            <th class="px-4 py-2 text-left">Subject</th>
+                            <th class="px-4 py-2 text-left">Phone</th>
+                            <th class="px-4 py-2 text-left">Email</th>
+                            <th class="px-4 py-2 text-left">Address</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @if (!empty($teachers) && count($teachers) > 0)
+                            @foreach ($teachers as $teacher)
+                                <tr class="border-b">
+                                    <td class="px-4 py-2 whitespace-nowrap">{{ $teacher->id}}</td>
+                                    <td class="px-4 py-2 whitespace-nowrap">{{ $teacher->name }}</td>
+                                    <td class="px-4 py-2 whitespace-nowrap">{{ $teacher->subject->name ?? '-' }}</td>
+                                    <td class="px-4 py-2 whitespace-nowrap">{{ $teacher->phone}}</td>
+                                    <td class="px-4 py-2 whitespace-nowrap">{{ $teacher->email}}</td>
+                                    <td class="px-4 py-2 whitespace-nowrap">{{ $teacher->address}}</td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="6" class="text-center py-4">Data guru tidak ditemukan.</td>
+                            </tr>
+                        @endif
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </x-layout>

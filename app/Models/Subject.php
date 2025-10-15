@@ -11,8 +11,10 @@ class Subject extends Model
     /** @use HasFactory<\Database\Factories\SubjectFactory> */
     use HasFactory;
 
-    public function teachers(): BelongsTo
+    protected $table = 'subjects';
+    protected $fillable = ['name'];
+    public function teachers()
     {
-        return $this->belongsTo(Teacher::class, 'subject_id');
+        return $this->hasOne(Teacher::class, 'subject_id');
     }
 }

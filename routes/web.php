@@ -14,10 +14,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('beranda');
 Route::get('/beranda', [HomeController::class, 'index'])->name('beranda');
 // Halaman lainnya
-Route::get('/profile', [ProfilController::class, 'profile'])->name('profile');
-Route::get('/kontak', [KontakController::class, 'kontak'])->name('kontak');
-Route::get('/student', [StudentController::class, 'index'])->name('student.index');
-Route::get('/guardian', [GuardianController::class, 'index'])->name('guardian.index');
-Route::get('/classroom', [ClassroomController::class, 'index'])->name('classroom.index');
-Route::get('/teacher', [TeacherController::class, 'index'])->name('teacher.index');
-Route::get('/subject', [SubjectController::class, 'index'])->name('subject.index');
+Route::get('/profile', [ProfilController::class, 'profile']);
+Route::get('/kontak', [KontakController::class, 'kontak']);
+Route::get('/student', [StudentController::class, 'index']);
+Route::get('/guardian', [GuardianController::class, 'index']);
+Route::get('/classroom', [ClassroomController::class, 'index']);
+Route::get('/teacher', [TeacherController::class, 'index']);
+Route::get('/subject', [SubjectController::class, 'index']);
