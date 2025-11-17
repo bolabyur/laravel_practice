@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Subject;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Subject;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Teacher>
@@ -17,12 +17,13 @@ class TeacherFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-            'name' => $this->faker->name(),
-            'subject_id' => Subject::factory(),
-            'phone' => $this->faker->phoneNumber(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'address' => $this->faker->city(),
+return [
+            'name' => fake()->name(),
+            'subject_id' => Subject::factory(), 
+            'email' => fake()->unique()->safeEmail(),
+            'phone' => fake()->phoneNumber(),
+            'address' => fake()->address(),
+            
         ];
     }
 }

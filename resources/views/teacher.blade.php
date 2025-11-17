@@ -9,29 +9,21 @@
                         <tr>
                             <th class="px-4 py-2 text-left">No</th>
                             <th class="px-4 py-2 text-left">Name</th>
-                            <th class="px-4 py-2 text-left">Subject</th>
-                            <th class="px-4 py-2 text-left">Phone</th>
-                            <th class="px-4 py-2 text-left">Email</th>
-                            <th class="px-4 py-2 text-left">Address</th>
+                            <th class="px-4 py-2 text-left">Mata Pelajaran</th>
+                            <th class="px-4 py-2 text-left">Telepon</th>
+                            <th class="px-4 py-2 text-left">Alamat</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if (!empty($teachers) && count($teachers) > 0)
-                            @foreach ($teachers as $teacher)
+                            @foreach ($teacher as $item)
                                 <tr class="border-b">
-                                    <td class="px-4 py-2 whitespace-nowrap">{{ $teacher->id}}</td>
-                                    <td class="px-4 py-2 whitespace-nowrap">{{ $teacher->name }}</td>
-                                    <td class="px-4 py-2 whitespace-nowrap">{{ $teacher->subject->name ?? '-' }}</td>
-                                    <td class="px-4 py-2 whitespace-nowrap">{{ $teacher->phone}}</td>
-                                    <td class="px-4 py-2 whitespace-nowrap">{{ $teacher->email}}</td>
-                                    <td class="px-4 py-2 whitespace-nowrap">{{ $teacher->address}}</td>
+                                    <td class="px-4 py-2 whitespace-nowrap">{{ $item->id}}</td>
+                                    <td class="px-4 py-2 whitespace-nowrap">{{ $item->name }}</td>
+                                    <td class="px-4 py-2 whitespace-nowrap">{{ $item->subject->name ?? 'N/A' }}</td>
+                                    <td class="px-4 py-2 whitespace-nowrap">{{ $item->phone}}</td>
+                                    <td class="px-4 py-2 whitespace-nowrap">{{ $item->address}}</td>
                                 </tr>
                             @endforeach
-                        @else
-                            <tr>
-                                <td colspan="6" class="text-center py-4">Data guru tidak ditemukan.</td>
-                            </tr>
-                        @endif
                     </tbody>
                 </table>
             </div>

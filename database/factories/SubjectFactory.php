@@ -2,8 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Teacher;
-use Faker\Provider\Lorem;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,8 +17,15 @@ class SubjectFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->unique()->randomElement(['Matematika', 'Bahasa Indonesia', 'Bahasa Inggris', 'Web Development', 'PKK','PJOK', 'MTK', 'Bahasa Jepang', 'PPKN', 'IOT', 'Informatik','Mobile Dev']),
-            'description' => fake()->unique()->realTextBetween()
+          'name' => $this->faker->unique()->randomElement([
+    'Web Dev', 
+    'Game Dev', 
+    'IOT', 
+    'Mobile Dev', 
+    'Matematika'
+]),
+
+            'description' => $this->faker->sentence(),
         ];
     }
 }

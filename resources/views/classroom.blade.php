@@ -8,20 +8,20 @@
                     <thead class="bg-gray-800 text-white">
                         <tr>
                             <th class="px-4 py-2 text-left">Id</th>
-                            <th class="px-4 py-2 text-left">Student List</th>
+                            <th class="px-4 py-2 text-left">Siswa</th>
                             <th class="px-4 py-2 text-left">Kelas</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($classrooms as $classroom)
+                        @foreach ($classrooms as $room)
                             <tr class="border-b">
-                                <td class="px-4 py-2 whitespace-nowrap">{{ $classroom->id}}</td>
+                                <td class="px-4 py-2 whitespace-nowrap">{{ $room->id}}</td>
                                 <td class="px-4 py-2 whitespace-nowrap">
-                                    @foreach ($classroom->students as $student)
+                                    @foreach ($room->students as $student)
                                         {{ $student->name }} <br>
                                     @endforeach
                                 </td>
-                                <td class="px-4 py-2 whitespace-nowrap">{{ $classroom->grade }}</td>
+                                <td class="px-4 py-2 whitespace-nowrap">{{ $room->class }}</td>
                             </tr>
                         @endforeach
                     </tbody>

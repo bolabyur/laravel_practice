@@ -12,11 +12,16 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        $teachers = Teacher::all();
-        return view('teacher', [
-            'teachers' => $teachers,
-            'title' => 'Data Guru'
-        ]);
+        // $student = [
+        //     ['id' => 1,'name' => 'Aldestha Nendrayanto', 'email' => 'nendra@gmail.com', 'address' => 'Gribig', 'kelas' => '11 PPLG 1'],
+        //     ['id' => 2,'name' => 'Aldikky Arfian Susanto', 'email' => 'dikky@gmail.com', 'address' => 'Kudus', 'kelas' => '11 PPLG 1'],
+        //     ['id' => 3,'name' => 'Alfian Fadhil Pradana', 'email' => 'fadhil@example.com', 'address' => 'Kudus', 'kelas' => '11 PPLG 1'],
+        //     ['id' => 4,'name' => 'Almira Natahania', 'email' => 'mira@gmail.com', 'address' => 'Kudus', 'kelas' => '11 PPLG 1'],
+        //     ['id' => 5,'name' => 'Arza Armandhito', 'email' => 'arza@gmail.com', 'address' => 'Kudus', 'kelas' => '11 PPLG 1'],
+        // ];
+
+        $teacher = Teacher::all();
+        return view('teacher', ['title' => 'Teacher', 'teacher' => $teacher]);
     }
 
     /**
@@ -38,7 +43,7 @@ class TeacherController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Teacher $teacher)
+    public function show(string $id)
     {
         //
     }
@@ -46,7 +51,7 @@ class TeacherController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Teacher $teacher)
+    public function edit(string $id)
     {
         //
     }
@@ -54,7 +59,7 @@ class TeacherController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Teacher $teacher)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -62,7 +67,7 @@ class TeacherController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Teacher $teacher)
+    public function destroy(string $id)
     {
         //
     }
