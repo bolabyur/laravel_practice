@@ -50,4 +50,40 @@ class AdminTeacherController extends Controller
 
         return redirect()->back()->with('success', 'Teacher dan Subject berhasil ditambahkan!');
     }
+
+    public function update(Request $request, $id)
+    {
+        $teacher = Teacher::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:teachers,email,' . $id,
+            'phone' => 'required|string|max:15',
+            'address' => 'required|string',
+            'subject_name' => 'required|string|max:255',
+            'subject_description' => 'required|string'
+        ]);
+
+        $teacher->update($validated);
+
+        // Update subject jika ada relasi
+        if ($teacher->subject) {
+            $teacher->subject->update([
+                'name' => $request->subject_name,
+                'description' => $request->subject_description
+            ]);
+        }
+
+        return redirect()->route('admin.teacher.index')
+            ->with('success', 'Teacher updated successfully');
+    }
+
+    public function destroy($id)
+    {
+        $teacher = Teacher::findOrFail($id);
+        $teacher->delete();
+
+        return redirect()->route('admin.teacher.index')
+            ->with('success', 'Teacher deleted successfully');
+    }
 }

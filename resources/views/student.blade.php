@@ -19,7 +19,7 @@
                     <tr class="hover:bg-gray-50">
                         <td class="border px-4 py-2">{{ $student['id'] }}</td>
                         <td class="border px-4 py-2">{{ $student['name'] }}</td>
-                        <td class="border px-4 py-2">{{ $student->classroom->grade }}</td>
+                        <td class="border px-4 py-2">{{ $student->classroom->class }}</td>
                         <td class="border px-4 py-2">{{ $student['email'] }}</td>
                         <td class="border px-4 py-2">{{ $student['address'] }}</td>
                     </tr>

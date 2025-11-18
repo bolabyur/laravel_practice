@@ -31,4 +31,30 @@ class AdminGuardianController extends Controller
 
         return redirect()->route('admin.guardian.index')->with('success', 'Guardian added successfully!');
     }
+
+    public function update(Request $request, $id)
+    {
+        $guardian = Guardian::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'job' => 'required|string|max:255',
+            'email' => 'required|email|unique:guardians,email,' . $id,
+            'address' => 'required|string'
+        ]);
+
+        $guardian->update($validated);
+
+        return redirect()->route('admin.guardian.index')
+            ->with('success', 'Guardian updated successfully');
+    }
+
+    public function destroy($id)
+    {
+        $guardian = Guardian::findOrFail($id);
+        $guardian->delete();
+
+        return redirect()->route('admin.guardian.index')
+            ->with('success', 'Guardian deleted successfully');
+    }
 }

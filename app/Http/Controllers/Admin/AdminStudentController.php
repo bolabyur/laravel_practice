@@ -33,7 +33,33 @@ class AdminStudentController extends Controller
         ]);
 
         Student::create($validated);
-        
+
         return redirect()->route('admin.student.index')->with('success', 'Student berhasil ditambahkan!');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $student = Student::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:students,email,' . $id,
+            'address' => 'required|string',
+            'classroom_id' => 'required|exists:classrooms,id'
+        ]);
+
+        $student->update($validated);
+
+        return redirect()->route('admin.student.index')
+            ->with('success', 'Student updated successfully');
+    }
+
+    public function destroy($id)
+    {
+        $student = Student::findOrFail($id);
+        $student->delete();
+
+        return redirect()->route('admin.student.index')
+            ->with('success', 'Student deleted successfully');
     }
 }
