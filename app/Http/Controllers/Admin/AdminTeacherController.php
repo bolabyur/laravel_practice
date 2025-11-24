@@ -12,70 +12,58 @@ class AdminTeacherController extends Controller
     public function index()
     {
         $teachers = Teacher::with('subject')->get();
-
-        return view('components.admin.teacher', [
-            'title' => 'Teacher List',
-            'teacher' => $teachers
-        ]);
+        $subjects = Subject::orderBy('name')->get();
+        $title = "Teacher List";
+        return view('components.admin.teacher', compact('teachers', 'subjects', 'title'));
+        
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'subject_name' => 'required',
-            'subject_description' => 'nullable',
-            'email' => 'required|email',
-            'phone' => 'required',
-            'address' => 'required',
+            'name' => 'required|string|max:255',
+            'subject_id' => 'required|exists:subjects,id|unique:teachers,subject_id',
+            'email' => 'required|email|unique:teachers,email',
+            'phone' => 'required|string|max:15',
+            'address' => 'required|string',
+        ], [
+            'subject_id.unique' => 'Mata pelajaran ini sudah diambil oleh guru lain. Setiap guru harus memiliki mata pelajaran yang unik.',
         ]);
 
-        // 1️⃣ Buat subject dulu
-        $subject = Subject::create([
-            'name' => $request->subject_name,
-            'description' => $request->subject_description ?? 'Belum ada deskripsi',
-        ]);
-
-        // 2️⃣ Buat teacher dan isi subject_id dari subject yang baru dibuat
-        $teacher = Teacher::create([
+        Teacher::create([
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
             'address' => $request->address,
-            'subject_id' => $subject->id,
+            'subject_id' => $request->subject_id,
         ]);
 
-        // ✅ Tidak perlu buat Subject kedua atau pakai save()
-        // Relasi sudah otomatis terhubung lewat subject_id
-
-        return redirect()->back()->with('success', 'Teacher dan Subject berhasil ditambahkan!');
+        return redirect()->route('admin.teacher.index')->with('success', 'Guru berhasil ditambahkan!');
     }
 
     public function update(Request $request, $id)
     {
         $teacher = Teacher::findOrFail($id);
 
-        $validated = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
+            'subject_id' => 'required|exists:subjects,id|unique:teachers,subject_id,' . $id,
             'email' => 'required|email|unique:teachers,email,' . $id,
             'phone' => 'required|string|max:15',
             'address' => 'required|string',
-            'subject_name' => 'required|string|max:255',
-            'subject_description' => 'required|string'
+        ], [
+            'subject_id.unique' => 'Mata pelajaran ini sudah diambil oleh guru lain. Setiap guru harus memiliki mata pelajaran yang unik.',
         ]);
 
-        $teacher->update($validated);
+        $teacher->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'subject_id' => $request->subject_id,
+        ]);
 
-        // Update subject jika ada relasi
-        if ($teacher->subject) {
-            $teacher->subject->update([
-                'name' => $request->subject_name,
-                'description' => $request->subject_description
-            ]);
-        }
-
-        return redirect()->route('admin.teacher.index')
-            ->with('success', 'Teacher updated successfully');
+        return redirect()->route('admin.teacher.index')->with('success', 'Data guru berhasil diperbarui!');
     }
 
     public function destroy($id)
@@ -83,7 +71,6 @@ class AdminTeacherController extends Controller
         $teacher = Teacher::findOrFail($id);
         $teacher->delete();
 
-        return redirect()->route('admin.teacher.index')
-            ->with('success', 'Teacher deleted successfully');
+        return redirect()->route('admin.teacher.index')->with('success', 'Guru berhasil dihapus!');
     }
 }

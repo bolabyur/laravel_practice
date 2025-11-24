@@ -87,8 +87,7 @@
                         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full inset-0 h-[calc(100%-1rem)] max-h-full bg-black/50">
                         <div class="relative p-4 w-full max-w-md max-h-full">
                             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                <div
-                                    class="flex items-center justify-between p-4 border-b rounded-t dark:border-gray-600">
+                                <div class="flex items-center justify-between p-4 border-b rounded-t dark:border-gray-600">
                                     <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
                                         Edit Student
                                     </h3>
@@ -104,10 +103,10 @@
                                 </div>
 
                                 <form action="{{ route('admin.student.update', $student->id) }}" method="POST"
-                                    class="p-4 md:p-5">
+                                    class="">
                                     @csrf
                                     @method('PUT')
-                                    <div class="grid gap-4 mb-4 grid-cols-1">
+                                    <div class="grid gap-4 grid-cols-1 p-4">
                                         <div>
                                             <label for="name"
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
@@ -152,7 +151,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="flex justify-end gap-2 pt-4 border-t dark:border-gray-600">
+                                    <div class="flex justify-end gap-2 p-4 border-t dark:border-gray-600">
                                         <button type="button" data-modal-hide="editStudentModal-{{ $student->id }}"
                                             class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-600 dark:text-gray-300 dark:hover:bg-gray-700 dark:focus:ring-gray-700">
                                             Batal
@@ -247,7 +246,8 @@
                     </button>
                 </div>
 
-                <form action="{{ route('admin.student.store') }}" method="POST" class="p-4 md:p-5">
+                <form action="{{ route('admin.student.store') }}" method="POST" 
+                class="p-4 md:p-5">
                     @csrf
                     <div class="grid gap-4 mb-4 grid-cols-1">
                         <div>

@@ -9,6 +9,23 @@
         </button>
     </div>
 
+    <!-- Alert Messages -->
+    @if(session('success'))
+        <div class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if($errors->any())
+        <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -22,7 +39,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($teacher as $item)
+                @foreach ($teachers as $item)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td class="px-6 py-4">{{ $loop->iteration }}</td>
                         <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">{{ $item->name }}</td>
@@ -104,17 +121,29 @@
                                         </div>
 
                                         <div>
-                                            <label for="subject_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Subject Name</label>
-                                            <input type="text" name="subject_name" id="subject_name" value="{{ $item->subject->name ?? '' }}" required
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                                placeholder="Masukkan nama mata pelajaran">
-                                        </div>
-
-                                        <div>
-                                            <label for="subject_description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Subject Deskripsi</label>
-                                            <input type="text" name="subject_description" id="subject_description" value="{{ $item->subject->description ?? '' }}" required
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                                placeholder="Masukkan deskripsi mata pelajaran">
+                                            <label for="subject_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mata Pelajaran</label>
+                                            <select name="subject_id" id="subject_id" required
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                                                <option value="">-- Pilih Mata Pelajaran --</option>
+                                                @foreach($subjects as $subject)
+                                                    @php
+                                                        $isTaken = \App\Models\Teacher::where('subject_id', $subject->id)
+                                                            ->where('id', '!=', $item->id)
+                                                            ->exists();
+                                                    @endphp
+                                                    <option value="{{ $subject->id }}" 
+                                                        {{ $item->subject_id == $subject->id ? 'selected' : '' }}
+                                                        {{ $isTaken && $item->subject_id != $subject->id ? 'disabled' : '' }}>
+                                                        {{ $subject->name }}
+                                                        @if($isTaken && $item->subject_id != $subject->id)
+                                                            (Sudah diambil)
+                                                        @endif
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                                                Setiap guru harus memiliki mata pelajaran yang unik.
+                                            </p>
                                         </div>
 
                                         <div>
@@ -231,17 +260,25 @@
                         </div>
 
                         <div>
-                            <label for="subject_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Subject Name</label>
-                            <input type="text" name="subject_name" id="subject_name" required
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                placeholder="Masukkan nama mata pelajaran">
-                        </div>
-
-                        <div>
-                            <label for="subject_description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Subject Deskripsi</label>
-                            <input type="text" name="subject_description" id="subject_description" required
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                placeholder="Masukkan deskripsi mata pelajaran">
+                            <label for="subject_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mata Pelajaran</label>
+                            <select name="subject_id" id="subject_id" required
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                                <option value="">-- Pilih Mata Pelajaran --</option>
+                                @foreach($subjects as $subject)
+                                    @php
+                                        $isTaken = \App\Models\Teacher::where('subject_id', $subject->id)->exists();
+                                    @endphp
+                                    <option value="{{ $subject->id }}" {{ $isTaken ? 'disabled' : '' }}>
+                                        {{ $subject->name }}
+                                        @if($isTaken)
+                                            (Sudah diambil)
+                                        @endif
+                                    </option>
+                                @endforeach
+                            </select>
+                            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                                Setiap guru harus memiliki mata pelajaran yang unik. Hanya mata pelajaran yang belum diambil yang dapat dipilih.
+                            </p>
                         </div>
 
                         <div>

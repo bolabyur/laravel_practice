@@ -16,8 +16,6 @@ return new class extends Migration
             $table->string('phone');
             $table->unsignedBigInteger('subject_id');
             $table->timestamps();
-
-            // Foreign key ke subjects
             $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
         });
     }

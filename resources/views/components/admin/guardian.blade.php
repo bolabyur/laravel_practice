@@ -95,7 +95,7 @@
                                 <form action="{{ route('admin.guardian.update', $item->id) }}" method="POST" class="p-4 md:p-5">
                                     @csrf
                                     @method('PUT')
-                                    <div class="grid gap-4 mb-4 grid-cols-1">
+                                    <div class="grid gap-4 p-4 grid-cols-1">
                                         <div>
                                             <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
                                             <input type="text" name="name" id="name" value="{{ $item->name }}" required
@@ -125,7 +125,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="flex justify-end gap-2 pt-4 border-t dark:border-gray-600">
+                                    <div class="flex justify-end gap-2 p-4 border-t dark:border-gray-600">
                                         <button type="button" data-modal-hide="editGuardianModal-{{ $item->id }}"
                                             class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-600 dark:text-gray-300 dark:hover:bg-gray-700 dark:focus:ring-gray-700">
                                             Batal
