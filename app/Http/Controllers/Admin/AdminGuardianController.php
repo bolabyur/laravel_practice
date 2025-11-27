@@ -12,7 +12,7 @@ class AdminGuardianController extends Controller
     {
         $guardian = Guardian::all();
 
-        return view('components.admin.guardian', [
+        return view('admin.guardian.guardian', [
             'title' => 'Guardian List',
             'guardian' => $guardian
         ]);

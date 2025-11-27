@@ -13,7 +13,7 @@ class AdminClassroomController extends Controller
         // Muat relasi students agar bisa dihitung di Blade
         $classrooms = Classroom::with('students')->get();
 
-        return view('components.admin.classroom', [
+        return view('admin.classroom.classroom', [
             'title' => 'Classroom List',
             'classrooms' => $classrooms
         ]);

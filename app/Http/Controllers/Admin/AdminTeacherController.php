@@ -11,11 +11,15 @@ class AdminTeacherController extends Controller
 {
     public function index()
     {
+        // Ambil semua teacher beserta subjectnya
         $teachers = Teacher::with('subject')->get();
-        $subjects = Subject::orderBy('name')->get();
+
+        // Ambil subject yang belum punya teacher
+        $availableSubjects = Subject::doesntHave('teacher')->orderBy('name')->get();
+
         $title = "Teacher List";
-        return view('components.admin.teacher', compact('teachers', 'subjects', 'title'));
-        
+
+        return view('admin.teacher.teacher', compact('teachers', 'availableSubjects', 'title'));
     }
 
     public function store(Request $request)
@@ -27,16 +31,10 @@ class AdminTeacherController extends Controller
             'phone' => 'required|string|max:15',
             'address' => 'required|string',
         ], [
-            'subject_id.unique' => 'Mata pelajaran ini sudah diambil oleh guru lain. Setiap guru harus memiliki mata pelajaran yang unik.',
+            'subject_id.unique' => 'Mata pelajaran ini sudah diambil guru lain.',
         ]);
 
-        Teacher::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'address' => $request->address,
-            'subject_id' => $request->subject_id,
-        ]);
+        Teacher::create($request->only(['name', 'email', 'phone', 'address', 'subject_id']));
 
         return redirect()->route('admin.teacher.index')->with('success', 'Guru berhasil ditambahkan!');
     }
@@ -52,18 +50,12 @@ class AdminTeacherController extends Controller
             'phone' => 'required|string|max:15',
             'address' => 'required|string',
         ], [
-            'subject_id.unique' => 'Mata pelajaran ini sudah diambil oleh guru lain. Setiap guru harus memiliki mata pelajaran yang unik.',
+            'subject_id.unique' => 'Mata pelajaran ini sudah diambil guru lain.',
         ]);
 
-        $teacher->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'address' => $request->address,
-            'subject_id' => $request->subject_id,
-        ]);
+        $teacher->update($request->only(['name', 'email', 'phone', 'address', 'subject_id']));
 
-        return redirect()->route('admin.teacher.index')->with('success', 'Data guru berhasil diperbarui!');
+        return redirect()->route('admin.teacher.index')->with('success', 'Guru berhasil diperbarui!');
     }
 
     public function destroy($id)

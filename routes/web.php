@@ -37,37 +37,12 @@ Route::get('/classroom', [ClassroomController::class, 'index'])->name('classroom
 Route::get('/teacher', [TeacherController::class, 'index'])->name('teacher');
 Route::get('/subject', [SubjectController::class, 'index'])->name('subject');
 
+
 Route::prefix('admin')->name('admin.')->group(function () {
-
-    Route::get('/dashboard', [App\Http\Controllers\Admin\AdminDashboardController::class, 'index'])
-        ->name('dashboard');
-
-
-    Route::get('/student', [AdminStudentController::class, 'index'])->name('student.index');
-    Route::post('/student', [AdminStudentController::class, 'store'])->name('student.store');
-    Route::put('/student/{id}', [AdminStudentController::class, 'update'])->name('student.update'); // 
-    Route::delete('/student/{id}', [AdminStudentController::class, 'destroy'])->name('student.destroy');
-
-    Route::get('/subject', [AdminSubjectController::class, 'index'])->name('subject.index');
-    Route::post('/subject', [AdminSubjectController::class, 'store'])->name('subject.store');
-    Route::put('/subject/{id}', [AdminSubjectController::class, 'update'])->name('subject.update');;
-
-
-    Route::get('/classroom', [ClassroomController::class, 'adminIndex'])->name('classroom.index');
-    Route::post('/classroom', [AdminClassroomController::class, 'store'])->name('classroom.store');
-    Route::put('/classroom/{id}', [AdminClassroomController::class, 'update'])->name('classroom.update');
-
-
-    Route::get('/kontak', [AdminKontakController::class, 'index'])->name('kontak.index');
-
-    Route::get('/guardian', [AdminGuardianController::class, 'index'])->name('guardian.index');
-    Route::post('/guardian', [AdminGuardianController::class, 'store'])->name('guardian.store');
-    Route::put('/guardian/{id}', [AdminGuardianController::class, 'update'])->name('guardian.update');
-    Route::delete('/guardian/{id}', [AdminGuardianController::class, 'destroy'])->name('guardian.destroy');
-
-    Route::get('/teacher', [AdminTeacherController::class, 'index'])->name('teacher.index');
-    Route::post('/teacher', [AdminTeacherController::class, 'store'])->name('teacher.store');
-    Route::get('/teacher/component', [AdminTeacherController::class, 'adminIndex'])->name('teacher.component');
-    Route::put('/teacher/{id}', [AdminTeacherController::class, 'update'])->name('teacher.update');
-    Route::delete('/teacher/{id}', [AdminTeacherController::class, 'destroy'])->name('teacher.destroy');
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::resource('/student', AdminStudentController::class);
+    Route::resource('/classroom', AdminClassroomController::class);
+    Route::resource('/teacher', AdminTeacherController::class);
+    Route::resource('/subject', AdminSubjectController::class);
+    Route::resource('/guardian', AdminGuardianController::class);
 });

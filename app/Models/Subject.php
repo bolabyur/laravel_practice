@@ -5,16 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SUbject extends Model
+class Subject extends Model
 {
-    /** @use HasFactory<\Database\Factories\SubjectFactory> */
     use HasFactory;
 
-    protected $table = 'subjects';
-    protected $fillable = ['name','description'];
+    protected $fillable = ['name', 'description'];
 
-    public function teachers()
+    // Relasi one-to-one: satu subject punya satu teacher
+    public function teacher()
     {
-        return $this->hasMany(Teacher::class, 'subject_id');
+        return $this->hasOne(Teacher::class, 'subject_id');
     }
 }

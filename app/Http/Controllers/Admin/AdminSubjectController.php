@@ -10,13 +10,13 @@ class AdminSubjectController extends Controller
 {
     public function index()
     {
-        $subject= Subject::all();
+        // Ganti 'teachers' jadi 'teacher'
+        $subjects = Subject::with('teacher')->get();
+        $title = "Subject List";
 
-        return view('components.admin.subject', [
-            'title' => 'subject',
-            'subject' => $subject
-        ]);
+        return view('admin.subject.subject', compact('subjects', 'title'));
     }
+
 
     public function store(Request $request)
     {
@@ -25,23 +25,30 @@ class AdminSubjectController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        Subject::create($request->all());
+        Subject::create($request->only(['name', 'description']));
 
-        return redirect()->route('admin.subject.index')->with('success', 'Subject added successfully!');
+        return redirect()->route('admin.subject.index')->with('success', 'Subject berhasil ditambahkan!');
     }
 
     public function update(Request $request, $id)
     {
         $subject = Subject::findOrFail($id);
 
-        $validated = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
 
-        $subject->update($validated);
+        $subject->update($request->only(['name', 'description']));
 
-        return redirect()->route('admin.subject.index')
-            ->with('success', 'Subject updated successfully');
+        return redirect()->route('admin.subject.index')->with('success', 'Subject berhasil diperbarui!');
+    }
+
+    public function destroy($id)
+    {
+        $subject = Subject::findOrFail($id);
+        $subject->delete();
+
+        return redirect()->route('admin.subject.index')->with('success', 'Subject berhasil dihapus!');
     }
 }
